@@ -23,8 +23,7 @@ models = [
 ]
 
 target_classes = [
-    'Footwear',
-    'Human foot'
+
 ]
 
 
