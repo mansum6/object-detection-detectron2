@@ -56,7 +56,7 @@ for ind in range(0, len(classes)):
     
     numImages=min(len(class_annotations),maxImages)
     for i in range(numImages):
-        line=class_annotaions[i]
+        line=class_annotations[i]
         line_parts = line.split(",")
         img_id = line_parts[0]
         save_path = os.path.join(run_mode, img_id + ".jpg")
