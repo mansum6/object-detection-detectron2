@@ -15,6 +15,7 @@ cpu_count = multiprocessing.cpu_count()
 parser = argparse.ArgumentParser(description="Download Class specific images from OpenImagesV4")
 parser.add_argument("--mode", help="Dataset category - train, validation or test", required=True)
 parser.add_argument("--classes", help="Names of object classes to be downloaded", required=True)
+parser.add_argument("--maxImages", help="Maximum number of images to download", required=False, type=int)
 parser.add_argument("--nthreads", help="Number of threads to use", required=False, type=int, default=cpu_count * 2)
 parser.add_argument("--occluded", help="Include occluded images", required=False, type=int, default=1)
 parser.add_argument("--truncated", help="Include truncated images", required=False, type=int, default=1)
@@ -52,7 +53,7 @@ for ind in range(0, len(classes)):
     class_annotations = subprocess.run(command.split(), stdout=subprocess.PIPE).stdout.decode("utf-8")
     class_annotations = class_annotations.splitlines()
 
-    for line in class_annotations:
+    for line in min(class_annotations,maxImages):
         line_parts = line.split(",")
         img_id = line_parts[0]
         save_path = os.path.join(run_mode, img_id + ".jpg")
