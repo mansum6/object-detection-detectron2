@@ -26,6 +26,7 @@ parser.add_argument("--inside", help="Include inside images", required=False, ty
 args = parser.parse_args()
 
 run_mode = args.mode
+maxImages = args.maxImages
 
 threads = args.nthreads
 
@@ -52,8 +53,10 @@ for ind in range(0, len(classes)):
     command = "grep " + dict_list[class_name.replace("_", " ")] + " ./" + run_mode + "-annotations-bbox.csv"
     class_annotations = subprocess.run(command.split(), stdout=subprocess.PIPE).stdout.decode("utf-8")
     class_annotations = class_annotations.splitlines()
-
-    for line in min(class_annotations,maxImages):
+    
+    numImages=min(len(class_annotations),maxImages)
+    for i in range(numImages):
+        line=class_annotaions[i]
         line_parts = line.split(",")
         img_id = line_parts[0]
         save_path = os.path.join(run_mode, img_id + ".jpg")
